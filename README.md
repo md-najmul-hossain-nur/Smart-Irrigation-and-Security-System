@@ -1,97 +1,85 @@
-# 🌱 Smart Irrigation and Security System
+# Smart Plant & Motion Monitor System 🌱🚨
 
-This project is an Arduino-based smart automation system that combines **plant irrigation** and **home security** features. The system intelligently waters plants based on soil moisture levels and monitors motion near the system for basic security alerts. It also displays real-time sensor data on an LCD display and in the Serial Monitor.
+This project is a **Smart Irrigation and Motion Detection System** using Arduino.  
+It monitors **soil moisture, temperature, humidity, motion, and water tank level** and automatically controls a **water pump** based on soil conditions. The system displays real-time data on an **LCD display** and also logs information to the **Serial Monitor**.
 
 ---
 
 ## ✅ Features
 
-| Feature | Description |
-|----------|-------------|
-| 🌱 Soil Moisture Monitoring | Detects dry or wet soil using a soil moisture sensor |
-| 🚰 Automatic Water Pump | Pump turns ON when soil is dry and water tank has water |
-| 💧 Water Level Monitoring | Ultrasonic sensor checks tank water level |
-| 🌡 Environment Tracking | DHT11 shows temperature and humidity |
-| 🚨 Security Motion Alert | PIR sensor detects movement |
-| 🔊 Alert Buzzer | Activates for motion or dry soil warnings |
-| 📟 LCD Display | Shows live sensor status |
-| 🖥 Serial Monitor Output | For system debugging |
+| Feature                            | Description |
+|------------------------------------|-------------|
+| 🌡 Temperature Monitoring          | Measures environment temperature using **DHT11** |
+| 💧 Humidity Monitoring             | Measures humidity using **DHT11** |
+| 🌱 Soil Moisture Detection         | Checks soil moisture using analog soil sensor |
+| 🚰 Automatic Pump Control          | Activates pump when soil is dry |
+| 🛢️ Water Level Monitoring          | Uses ultrasonic sensor to track water tank level |
+| 🚶 Motion Detection                | Detects movement using PIR sensor |
+| 🔊 Alert System                    | Buzzer alerts when motion is detected |
+| 🖥 LCD Display                     | Displays sensor readings on a 16x2 I2C LCD |
+| 🔧 Serial Monitor Logs             | Prints detailed formatted logs for debugging |
 
 ---
 
 ## 🔧 Components Used
 
-| Component | Quantity |
-|-----------|----------|
-| Arduino Uno | 1 |
-| Soil Moisture Sensor | 1 |
-| Ultrasonic Sensor (HC-SR04) | 1 |
-| PIR Motion Sensor (HC-SR501) | 1 |
-| DHT11 Temperature & Humidity Sensor | 1 |
-| Relay Module (4-channel or 1-channel) | 1 |
-| Submersible Water Pump (3–6V) | 1 |
-| Buzzer | 1 |
-| 16x2 LCD Display with I2C | 1 |
-| Jumper Wires & Breadboard | As needed |
-| 5V Power Supply | 1 |
+| Component | Quantity | Description |
+|-----------|----------|-------------|
+| Arduino Uno | 1 | Main controller |
+| DHT11 Sensor | 1 | Temperature & Humidity sensor |
+| Soil Moisture Sensor | 1 | For soil readings |
+| HC-SR04 Ultrasonic Sensor | 1 | Water level measurement |
+| HC-SR501 PIR Motion Sensor | 1 | Detects motion |
+| Relay Module (1-channel) | 1 | Controls water pump |
+| Submersible Water Pump | 1 | For irrigation |
+| Buzzer | 1 | Alarm |
+| 16x2 I2C LCD Display | 1 | Visual output |
+| Jumper Wires | - | Connections |
+| External Power Supply (12V for pump) | 1 | Optional |
 
 ---
 
 ## 🔌 Pin Connections
 
-| Module / Component | Arduino Pin |
-|--------------------|-------------|
-| Soil Moisture Sensor (AO) | A0 |
-| Ultrasonic TRIG | D9 |
-| Ultrasonic ECHO | D10 |
-| Relay (Pump Control) | D8 |
+### Arduino Pin Mapping
+
+| Module / Sensor | Arduino Pin |
+|------------------|-------------|
+| DHT11 Sensor     | D2 |
+| Soil Sensor (Analog) | A0 |
+| Ultrasonic Trigger Pin | D9 |
+| Ultrasonic Echo Pin | D10 |
+| Relay Module (Pump Control) | D8 |
 | Buzzer | D4 |
 | PIR Motion Sensor | D7 |
-| DHT11 Data Pin | D2 |
-| LCD SDA | A4 |
-| LCD SCL | A5 |
-| Power (VCC & GND) | 5V, GND |
+| LCD (I2C) SDA | A4 |
+| LCD (I2C) SCL | A5 |
 
 ---
 
-## 🛠 Circuit Diagram
+## 💻 Software Requirements
 
-A simple wiring diagram connects all sensors to the Arduino Uno with a relay controlling the water pump. **Make sure to use a separate power source for the water pump if needed** to avoid damaging the Arduino.
+- Arduino IDE
+- Required Libraries:
+  - `LiquidCrystal_I2C`
+  - `Wire`
+  - `DHT`
 
----
-
-## 💻 Code
-
-The full Arduino code for this project is included in this repository:  
-`Smart-Irrigation-and-Security-System.ino`
-
----
-
-## 🔄 System Workflow
-
-1. The system reads soil moisture.
-2. If **Soil = Dry** and **Tank = Not Empty** → Pump ON.
-3. If **Soil = Wet** or **Tank = Empty** → Pump OFF.
-4. PIR sensor detects motion → Trigger buzzer security alert.
-5. DHT11 tracks room temperature and humidity.
-6. LCD continuously displays:
-   - Soil Moisture Status
-   - Temperature & Humidity
-   - Water Tank Level
-   - Motion Detection Status
-7. Same data also prints on Serial Monitor.
+Install libraries from Arduino IDE → **Sketch → Include Library → Manage Libraries**
 
 ---
 
-## 🚀 Setup Instructions
+## 🚀 How It Works
 
-### Upload Code
-1. Open `.ino` file in Arduino IDE or VS Code.
-2. Select **Arduino Uno** as the board.
-3. Select the correct **COM Port**.
-4. Click **Upload**.
+1. When soil becomes dry, pump turns **ON** automatically.
+2. If tank water level is low (distance > 20cm), pump stays **OFF**.
+3. PIR detects motion and triggers sound alert.
+4. LCD cycles between:
+   - Screen 1: Temperature + Humidity
+   - Screen 2: Soil Moisture
+   - Screen 3: Tank Water Level + Pump Status
+5. Serial Monitor prints detailed logs for monitoring.
 
-### VS Code (Optional)
-```bash
-git clone https://github.com/md-najmul-hossain-nur/Smart-Irrigation-and-Security-System.git
-cd Smart-Irrigation-and-Security-System
+---
+
+
